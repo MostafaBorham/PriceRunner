@@ -16,7 +16,10 @@ class Product {
       id: map['id'],
       name: map['name'],
       image: map['image'],
-      prices: map['prices'].map((price) => Price.fromMap(price)).toList());
+      prices: (map['prices'] as List<dynamic>)
+          .map((price) => Price.fromMap(price as Map<String, dynamic>))
+          .toList(),
+  );
 
   Map<String, dynamic> toMap() => {
         'id': id,

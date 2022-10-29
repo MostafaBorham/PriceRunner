@@ -26,120 +26,106 @@ class _PriceRunnerScreenState extends State<PriceRunnerScreen> {
     screenSize = MediaQuery.of(context).size;
     priceRunnerCubit = PriceRunnerCubit.getInstance(context);
     return BlocBuilder<PriceRunnerCubit,PriceRunnerState>(
-      builder: (context, state) => RefreshIndicator(
-        onRefresh: () async {
-          priceRunnerCubit!.getProductInfo();
-        },
-        child: Scaffold(
-          backgroundColor: Colors.white,
-          body: SafeArea(
-              child: Padding(
-            padding: const EdgeInsets.all(15.0),
-            child: state is PriceRunnerInitial || state is PriceRunnerLoading
-                ? const Center(
-                    child: CircularProgressIndicator(),
-                  )
-                : Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Text(
-                        'PriceRunner',
-                        style: Theme.of(context).textTheme.titleLarge,
+      builder: (context, state) => Scaffold(
+        backgroundColor: Colors.white,
+        body: SafeArea(
+            child: Padding(
+          padding: const EdgeInsets.all(15.0),
+          child: state is PriceRunnerInitial || state is PriceRunnerLoading
+              ? const Center(
+                  child: CircularProgressIndicator(),
+                )
+              : Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text(
+                      'PriceRunner',
+                      style: Theme.of(context).textTheme.titleLarge,
+                    ),
+                    Padding(
+                      padding: EdgeInsets.symmetric(
+                          vertical: screenSize!.height * 0.05),
+                      child: Image.network(
+                        priceRunnerCubit!.product!.image,
+                        fit: BoxFit.contain,
+                        height: screenSize!.height * 0.2,
+                        width: screenSize!.width * 0.5,
                       ),
-                      Padding(
-                        padding: EdgeInsets.symmetric(
-                            vertical: screenSize!.height * 0.05),
-                        child: Image.network(
-                          priceRunnerCubit!.product!.image,
-                          fit: BoxFit.contain,
-                          height: screenSize!.height * 0.2,
-                          width: screenSize!.width * 0.5,
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          priceRunnerCubit!.product!.name,
+                          style: Theme.of(context).textTheme.titleMedium,
                         ),
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            priceRunnerCubit!.product!.name,
-                            style: Theme.of(context).textTheme.titleMedium,
-                          ),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          Row(
-                            children: priceRunnerCubit!.product!.name
-                                .split(' ')
-                                .map((keyword) => Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 5.0),
-                                      child: Container(
-                                          padding: const EdgeInsets.all(5),
-                                          decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(5),
-                                            color: const Color(0xFFF5F6F5),
-                                          ),
-                                          child: Text(
-                                            keyword,
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .labelSmall!
-                                                .copyWith(
-                                                    color: const Color(
-                                                        0xFF888888)),
-                                          )),
-                                    ))
-                                .toList(),
-                          ),
-                          const SizedBox(
-                            height: 20,
-                          ),
-                          Text(
-                            'Discover & compare prices',
-                            style: Theme.of(context).textTheme.titleSmall,
-                          ),
-                          const SizedBox(
-                            height: 15,
-                          ),
-                          SizedBox(
-                            height: screenSize!.height * 0.1,
-                            child: ListView.separated(
-                                itemBuilder: (context, index) => _buildItem(
-                                    priceRunnerCubit!.displayedPrices[index]),
-                                separatorBuilder: (context, index) =>
-                                    const SizedBox(
-                                      height: 15,
-                                    ),
-                                itemCount:
-                                    priceRunnerCubit!.displayedPrices.length),
-                          ),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                        ],
-                      ),
-                      TextButton.icon(
-                          onPressed: () {
-                            priceRunnerCubit!.lengthOfDisplayedPrices <
-                                    priceRunnerCubit!.prices.length
-                                ? priceRunnerCubit!.showMorePrices()
-                                : priceRunnerCubit!.showLessPrices();
-                          },
-                          icon: Text(
-                            priceRunnerCubit!.lengthOfDisplayedPrices <
-                                    priceRunnerCubit!.prices.length
-                                ? 'show More prices'
-                                : 'show Less prices',
-                            style: Theme.of(context).textTheme.labelMedium,
-                          ),
-                          label: priceRunnerCubit!.lengthOfDisplayedPrices <
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        Row(
+                          children: priceRunnerCubit!.product!.name
+                              .split(' ')
+                              .map((keyword) => Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 5.0),
+                                    child: Container(
+                                        padding: const EdgeInsets.all(5),
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(5),
+                                          color: const Color(0xFFF5F6F5),
+                                        ),
+                                        child: Text(
+                                          keyword,
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .labelSmall!
+                                              .copyWith(
+                                                  color: const Color(
+                                                      0xFF888888)),
+                                        )),
+                                  ))
+                              .toList(),
+                        ),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        Text(
+                          'Discover & compare prices',
+                          style: Theme.of(context).textTheme.titleSmall,
+                        ),
+                        const SizedBox(
+                          height: 15,
+                        ),
+                        Column(
+                          children: PriceRunnerCubit().displayedPrices.map((price) => _buildItem(price)).toList(),
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                      ],
+                    ),
+                    TextButton.icon(
+                        onPressed: () {
+                          priceRunnerCubit!.lengthOfDisplayedPrices <
                                   priceRunnerCubit!.prices.length
-                              ? const Icon(Icons.arrow_drop_down_sharp)
-                              : const Icon(Icons.arrow_drop_up_sharp))
-                    ],
-                  ),
-          )),
-        ),
+                              ? priceRunnerCubit!.showMorePrices()
+                              : priceRunnerCubit!.showLessPrices();
+                        },
+                        icon: Text(
+                          priceRunnerCubit!.lengthOfDisplayedPrices <
+                                  priceRunnerCubit!.prices.length
+                              ? 'show More prices'
+                              : 'show Less prices',
+                          style: Theme.of(context).textTheme.labelMedium,
+                        ),
+                        label: priceRunnerCubit!.lengthOfDisplayedPrices <
+                                priceRunnerCubit!.prices.length
+                            ? const Icon(Icons.arrow_drop_down_sharp)
+                            : const Icon(Icons.arrow_drop_up_sharp))
+                  ],
+                ),
+        )),
       ),
     );
   }

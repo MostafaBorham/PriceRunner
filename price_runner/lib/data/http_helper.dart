@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 import 'package:price_runner/data/product_model.dart';
+import 'package:price_runner/extensions/string_extension.dart';
 
 class HttpHelper {
   static const _baseUrl =
@@ -12,8 +13,8 @@ class HttpHelper {
         await http.get(Uri.parse(_baseUrl+_getProductEndPoint),headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json;charset=UTF-8',
-          'Charset': 'utf-8'
         });
+    print(response.body);
     final productJson = json.decode(response.body);
     return Product.fromMap(productJson);
   }

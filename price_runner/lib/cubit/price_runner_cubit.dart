@@ -15,10 +15,10 @@ class PriceRunnerCubit extends Cubit<PriceRunnerState> {
 
   getProductInfo()async{
     emit(PriceRunnerLoading());
-    HttpHelper.getProduct().then((product) {
-
-      product=product;
-      prices=product.prices;
+    print('before');
+    HttpHelper.getProduct().then((productResult) {
+      product=productResult;
+      prices=productResult.prices;
       _addItemToDisplayedPrices();
       emit(PriceRunnerLoaded());
     });
