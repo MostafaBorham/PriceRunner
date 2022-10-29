@@ -17,26 +17,27 @@ class MyApp extends StatelessWidget {
         statusBarColor: Colors.white,
         statusBarIconBrightness: Brightness.dark));
     return MaterialApp(
-          title: 'Price Runner',
-          debugShowCheckedModeBanner: false,
-          theme: ThemeData(
-              textButtonTheme: TextButtonThemeData(
-                  style: TextButton.styleFrom(
-                      foregroundColor: const Color(0xFF54328E))),
-              textTheme: const TextTheme(
-                      titleMedium: TextStyle(fontWeight: FontWeight.w600),
-                      titleSmall: TextStyle(fontWeight: FontWeight.w600),
-                      labelSmall: TextStyle(),
-                      bodySmall: TextStyle(),
-                      bodyMedium: TextStyle(),
-                      titleLarge: TextStyle(fontWeight: FontWeight.w600),
-                      labelMedium: TextStyle(fontWeight: FontWeight.w400))
-                  .apply(
-                bodyColor: const Color(0xFF54328E),
-                displayColor: const Color(0xFF54328E),
-              )),
-          home: BlocProvider<PriceRunnerCubit>(
-              create: (BuildContext context) =>PriceRunnerCubit()..getProductInfo(),
-          child: const PriceRunnerScreen()));
+        title: 'Price Runner',
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+            textButtonTheme: TextButtonThemeData(
+                style: TextButton.styleFrom(
+                    foregroundColor: const Color(0xFF54328E))),
+            textTheme: const TextTheme(
+                    titleMedium: TextStyle(fontWeight: FontWeight.w600),
+                    titleSmall: TextStyle(fontWeight: FontWeight.w600),
+                    labelSmall: TextStyle(),
+                    bodySmall: TextStyle(),
+                    bodyMedium: TextStyle(),
+                    titleLarge: TextStyle(fontWeight: FontWeight.w600),
+                    labelMedium: TextStyle(fontWeight: FontWeight.w400))
+                .apply(
+              bodyColor: const Color(0xFF54328E),
+              displayColor: const Color(0xFF54328E),
+            )),
+        home: BlocProvider<PriceRunnerCubit>(
+            create: (BuildContext context) =>
+                PriceRunnerCubit()..getProductInfo(),
+            child: const PriceRunnerScreen()));
   }
 }

@@ -13,13 +13,13 @@ class Product {
       required this.prices});
 
   factory Product.fromMap(Map<String, dynamic> map) => Product(
-      id: map['id'],
-      name: map['name'],
-      image: map['image'],
-      prices: (map['prices'] as List<dynamic>)
-          .map((price) => Price.fromMap(price as Map<String, dynamic>))
-          .toList(),
-  );
+        id: map['id'],
+        name: map['name'],
+        image: map['image'],
+        prices: (map['prices'] as List<dynamic>)
+            .map((price) => Price.fromMap(price as Map<String, dynamic>))
+            .toList(),
+      );
 
   Map<String, dynamic> toMap() => {
         'id': id,

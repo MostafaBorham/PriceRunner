@@ -5,9 +5,11 @@ abstract class PriceRunnerState {
 }
 
 class PriceRunnerInitial extends PriceRunnerState {}
+
 class PriceRunnerLoading extends PriceRunnerState {}
+
 class PriceRunnerLoaded extends PriceRunnerState {}
-class PriceRunnerShowMorePrices extends PriceRunnerState {
-}
-class PriceRunnerShowLessPrices extends PriceRunnerState {
-}
+
+class PriceRunnerShowMorePrices extends PriceRunnerState {}
+
+class PriceRunnerShowLessPrices extends PriceRunnerState {}

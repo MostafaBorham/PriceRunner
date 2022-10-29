@@ -8,41 +8,43 @@ part 'price_runner_state.dart';
 class PriceRunnerCubit extends Cubit<PriceRunnerState> {
   PriceRunnerCubit() : super(PriceRunnerInitial());
   Product? product;
-  List<Price> prices=[];
-  List<Price> displayedPrices=[];
-  int lengthOfDisplayedPrices=0;//عبارة عن طول القائمة الخاصة بالاسعار المؤقتة الظاهرة حاليا فى الشاشة
-  static PriceRunnerCubit getInstance(context)=>BlocProvider.of<PriceRunnerCubit>(context);
+  List<Price> prices = [];
+  List<Price> displayedPrices = [];
+  int lengthOfDisplayedPrices =
+      0; //عبارة عن طول القائمة الخاصة بالاسعار المؤقتة الظاهرة حاليا فى الشاشة
+  static PriceRunnerCubit getInstance(context) =>
+      BlocProvider.of<PriceRunnerCubit>(context);
 
-  getProductInfo()async{
+  getProductInfo() async {
     emit(PriceRunnerLoading());
-    print('before');
     HttpHelper.getProduct().then((productResult) {
-      product=productResult;
-      prices=productResult.prices;
+      product = productResult;
+      prices = productResult.prices;
       _addItemToDisplayedPrices();
       emit(PriceRunnerLoaded());
     });
   }
 
-  showMorePrices(){
+  showMorePrices() {
     _addItemToDisplayedPrices();
     emit(PriceRunnerShowMorePrices());
   }
-  showLessPrices(){
-    lengthOfDisplayedPrices=0;//reset displayed prices then add again by _addItemToPrices method
+
+  showLessPrices() {
+    lengthOfDisplayedPrices =
+        0; //reset displayed prices then add again by _addItemToPrices method
     _addItemToDisplayedPrices();
     emit(PriceRunnerShowLessPrices());
   }
 
-  _addItemToDisplayedPrices(){
+  _addItemToDisplayedPrices() {
     displayedPrices.clear();
-    if(lengthOfDisplayedPrices+2>prices.length){
-      lengthOfDisplayedPrices=prices.length;
+    if (lengthOfDisplayedPrices + 2 > prices.length) {
+      lengthOfDisplayedPrices = prices.length;
+    } else {
+      lengthOfDisplayedPrices += 2;
     }
-    else{
-      lengthOfDisplayedPrices+=2;
-    }
-    for(int i=0;i<lengthOfDisplayedPrices;i++){
+    for (int i = 0; i < lengthOfDisplayedPrices; i++) {
       displayedPrices.add(prices[i]);
     }
   }

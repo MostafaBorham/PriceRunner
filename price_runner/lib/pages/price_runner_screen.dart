@@ -25,7 +25,7 @@ class _PriceRunnerScreenState extends State<PriceRunnerScreen> {
   Widget build(BuildContext context) {
     screenSize = MediaQuery.of(context).size;
     priceRunnerCubit = PriceRunnerCubit.getInstance(context);
-    return BlocBuilder<PriceRunnerCubit,PriceRunnerState>(
+    return BlocBuilder<PriceRunnerCubit, PriceRunnerState>(
       builder: (context, state) => Scaffold(
         backgroundColor: Colors.white,
         body: SafeArea(
@@ -81,8 +81,8 @@ class _PriceRunnerScreenState extends State<PriceRunnerScreen> {
                                               .textTheme
                                               .labelSmall!
                                               .copyWith(
-                                                  color: const Color(
-                                                      0xFF888888)),
+                                                  color:
+                                                      const Color(0xFF888888)),
                                         )),
                                   ))
                               .toList(),
@@ -98,7 +98,9 @@ class _PriceRunnerScreenState extends State<PriceRunnerScreen> {
                           height: 15,
                         ),
                         Column(
-                          children: PriceRunnerCubit().displayedPrices.map((price) => _buildItem(price)).toList(),
+                          children: priceRunnerCubit!.displayedPrices
+                              .map((price) => _buildItem(price))
+                              .toList(),
                         ),
                         const SizedBox(
                           height: 10,
